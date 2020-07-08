@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style type="text/css">
+		*{box-sizing: border-box;}
+		div#contenedorJuegoPuzzle{
+			/*display: flex;*/
+		}
+		div#contenedorPuzzle{
+			position: relative;
+			/*border: 2px solid red;*/
+			width: 404px;
+			height: 309px;
+			background: linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.7)), url("img-puzzle/02puzzle_todo.png");			
+			background-position: center;
+  			background-repeat: no-repeat; 
+  			background-size: cover; 
+
+  			float: left;
+		}
+		div.contenedorPieza{
+			/*border: 1px solid darkgreen;*/
+			position: absolute;
+		}
+		div.contenedorPieza > img{width: 100%}
+
+
+		div#contenedorPiezas{
+			/*border: 2px solid darkgreen;*/
+
+			float: left;
+			max-width: calc(90% - 400px);
+			margin-left: 5%;
+		}
+		div#contenedorPiezas img{margin: 10px;}
+		div#contenedorPiezas img:hover{cursor: pointer;}
+	</style>
+</head>
+<body>
+
+	<div id="contenedorJuegoPuzzle">
+		<div id="contenedorPuzzle"></div>
+
+		<div id="contenedorPiezas">
+			<!--
+			<img id="img-0" data-num-pieza="0" src="img-puzzle/02puzzle_01.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-1" data-num-pieza="1" src="img-puzzle/02puzzle_02.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-2" data-num-pieza="2" src="img-puzzle/02puzzle_03.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-3" data-num-pieza="3" src="img-puzzle/02puzzle_04.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-4" data-num-pieza="4" src="img-puzzle/02puzzle_05.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-5" data-num-pieza="5" src="img-puzzle/02puzzle_06.png" draggable="true" ondragstart="drag(event)">
+
+			<img id="img-6" data-num-pieza="6" src="img-puzzle/02puzzle_07.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-7" data-num-pieza="7" src="img-puzzle/02puzzle_08.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-8" data-num-pieza="8" src="img-puzzle/02puzzle_09.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-9" data-num-pieza="9" src="img-puzzle/02puzzle_10.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-10" data-num-pieza="10" src="img-puzzle/02puzzle_11.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-11" data-num-pieza="11" src="img-puzzle/02puzzle_12.png" draggable="true" ondragstart="drag(event)">
+
+			<img id="img-12" data-num-pieza="12" src="img-puzzle/02puzzle_13.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-13" data-num-pieza="13" src="img-puzzle/02puzzle_14.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-14" data-num-pieza="14" src="img-puzzle/02puzzle_15.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-15" data-num-pieza="15" src="img-puzzle/02puzzle_16.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-16" data-num-pieza="16" src="img-puzzle/02puzzle_17.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-17" data-num-pieza="17" src="img-puzzle/02puzzle_18.png" draggable="true" ondragstart="drag(event)">
+
+			<img id="img-18" data-num-pieza="18" src="img-puzzle/02puzzle_19.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-19" data-num-pieza="19" src="img-puzzle/02puzzle_20.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-20" data-num-pieza="20" src="img-puzzle/02puzzle_21.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-21" data-num-pieza="21" src="img-puzzle/02puzzle_22.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-22" data-num-pieza="22" src="img-puzzle/02puzzle_23.png" draggable="true" ondragstart="drag(event)">
+			<img id="img-23" data-num-pieza="23" src="img-puzzle/02puzzle_24.png" draggable="true" ondragstart="drag(event)">
+		-->
+		</div>
+	</div>
+
+
+
+<script type="text/javascript">
+	var escala = 0.4
+
+
+	let arrayAnchoPiezas 	= [227,181,288,180,288,174,173,287,180,288,180,228,227,181,288,180,288,174,173,287,180,288,180,228];
+	let arrayAltoPiezas 	= [198,260,198,260,198,260,328,206,328,206,328,206,205,328,206,328,206,328,260,198,260,198,260,198];
+
+	let posicionX = [0,0,0,0,0,0,122,183,122,183,122,183,374,313,374,313,374,313,503,565,503,565,503,565];   
+	let posicionY = [0,160,274,495,608,829,0,107,328,441,662,775,0,160,274,495,608,829,0,107,328,441,662,775];
+
+	let contenedorPuzzle = document.getElementById('contenedorPuzzle');	
+	crearContenedoresVacios(contenedorPuzzle, arrayAnchoPiezas, arrayAltoPiezas, posicionX, posicionY, arrayAltoPiezas.length)
+	function crearContenedoresVacios(contenedorPuzzle, arrayAnchoPiezas, arrayAltoPiezas, posicionX, posicionY, cantidadPiezas){
+		for (let i = 0; i < cantidadPiezas; i++){
+			let contenedorPieza = document.createElement('div')
+			contenedorPieza.id = 'contenedorPieza-' + i
+			contenedorPieza.dataset.numPieza = i
+			contenedorPieza.className = 'contenedorPieza'
+			contenedorPieza.style.width 	= arrayAnchoPiezas[i] * escala + 'px';
+			contenedorPieza.style.height 	= arrayAltoPiezas[i] * escala + 'px';
+			contenedorPieza.style.top 		= posicionX[i] * escala + 'px'
+			contenedorPieza.style.left 		= posicionY[i] * escala + 'px'
+
+			//contenedorPieza.addEventListener("drop", drop);
+			//contenedorPieza.addEventListener("dragover", allowDrop);
+
+			contenedorPuzzle.appendChild(contenedorPieza)
+		}
+	}
+
+	let contenedorPiezas = document.getElementById('contenedorPiezas');	
+	crearPiezas(contenedorPiezas, arrayAnchoPiezas, arrayAltoPiezas, arrayAltoPiezas.length);
+	function crearPiezas(contenedorPiezas, arrayAnchoPiezas, arrayAltoPiezas, cantidadPiezas){
+		for (let i = 0; i < cantidadPiezas; i++){
+			let pieza = document.createElement('img')
+			pieza.id = 'img-' + i
+			pieza.className = 'draggable'
+			pieza.dataset.numPieza = i
+			pieza.src = 'img-puzzle/02puzzle_' + (i + 1) + '.png'
+			pieza.style.width 	= arrayAnchoPiezas[i] * escala + 'px';
+			pieza.style.height 	= arrayAltoPiezas[i] * escala + 'px';
+
+			//pieza.style.width 	= arrayAnchoPiezas[i] + 'px';
+			//pieza.style.height 	= arrayAltoPiezas[i] + 'px';
+
+			//pieza.setAttribute('draggable', true);
+			//pieza.addEventListener("dragstart", drag);
+
+			contenedorPiezas.appendChild(pieza)
+		}		
+	}
+
+
+</script>
+
+
+<script type="text/javascript" src="draggin.js"></script>
+
+
+</body>
+</html>
